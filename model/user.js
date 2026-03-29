@@ -1,8 +1,8 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/database"); // تأكد من مسار ملف الاتصال
 
-const User = sequelize.define(
-  "User",
+const user = sequelize.define(
+  "user",
   {
     id: {
       type: DataTypes.INTEGER,
@@ -45,7 +45,7 @@ const User = sequelize.define(
       },
     },
     role: {
-      type: DataTypes.ENUM("admin", "user"),
+      type: DataTypes.ENUM("admin", "user", "doctor"),
       defaultValue: "user",
     },
     phone: {
@@ -54,7 +54,7 @@ const User = sequelize.define(
       validate: {
         is: {
           args: /^\d{11}$/,
-          msg: "Phone number must be 10 digits",
+          msg: "Phone number must be 11 digits",
         },
       },
     },
@@ -81,6 +81,14 @@ const User = sequelize.define(
       allowNull: true,
       defaultValue: DataTypes.NOW,
     },
+    departmentId: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: "departments",
+        key: "id",
+      },
+    },
   },
   {
     tableName: "users",
@@ -88,4 +96,4 @@ const User = sequelize.define(
   },
 );
 
-module.exports = User;
+module.exports = user;

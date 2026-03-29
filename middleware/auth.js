@@ -1,11 +1,13 @@
-// user validator
 const User = require("../model/user");
+const jwt = require("jsonwebtoken");
 const auth = async (req, res, next) => {
   try {
-    const token = req.headers.Authorization;
+    const token = req.headers.authorization?.split(" ")[1];
     if (!token) {
       return res.status(401).json({ message: "Unauthorized" });
     }
+    console.log(token);
+    console.log(process.env.JWT_SECRET);
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
     const user = await User.findByPk(decoded.id, {
@@ -33,4 +35,9 @@ const isAdmin = async (req, res, next) => {
     console.log(error);
     res.status(500).json({ message: error.message });
   }
+};
+
+module.exports = {
+  auth,
+  isAdmin,
 };

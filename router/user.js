@@ -1,13 +1,20 @@
 const express = require("express");
 const router = express.Router();
 const {
-  getAllUsers,
+  getAllusers,
   register,
-  updataUser,
+  updateuser,
   login,
+  deleteuser,
+  addDoctor,
+  getDoctors,
 } = require("../controller/user");
-router.get("/getallusers", getAllUsers);
+router.get("/getallusers", getAllusers);  
 router.post("/login", login);
 router.post("/register", register);
-router.put("/update", updataUser);
+router.put("/update", updateuser);
+router.delete("/delete", deleteuser);
+router.post("/add-doctor", addDoctor);
+router.get("/doctors", getDoctors);
+
 module.exports = router;
